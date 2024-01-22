@@ -2,16 +2,15 @@
 //  Point.swift
 //  snakegame
 //
-//  Created by David Southgate on 22/01/2024.
+//  Created by Vlad Z on 21/01/2024.
 //
 
 import Foundation
-import UIKit
 
-struct Point: Equatable {
-    let x: Int
-    let y: Int
-    
+struct Point: Codable, Equatable {
+    var x: Double
+    var y: Double
+
     func direction(of point: Point) -> Direction {
         if point.x < self.x {
             return .left

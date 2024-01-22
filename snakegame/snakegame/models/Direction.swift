@@ -2,6 +2,7 @@
 //  Direction.swift
 //  snakegame
 //
+//  Created by Vlad Z on 21/01/2024.
 //  Created by David Southgate on 22/01/2024.
 //
 
@@ -12,7 +13,7 @@ enum Direction: Int, Comparable {
     case right = 1
     case down = 2
     case left = 3
-    
+
     static func < (lhs: Direction, rhs: Direction) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
