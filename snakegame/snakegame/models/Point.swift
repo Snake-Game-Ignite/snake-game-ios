@@ -8,8 +8,8 @@
 import Foundation
 
 struct Point: Codable, Equatable {
-    var x: Double
-    var y: Double
+    var x: Int
+    var y: Int
 
     func direction(of point: Point) -> Direction {
         if point.x < self.x {

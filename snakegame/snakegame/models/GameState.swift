@@ -16,7 +16,7 @@ import Foundation
     {"id":2,"score":0,"snake":[{"x":8.0,"y":5.0},{"x":8.0,"y":6.0},{"x":8.0,"y":7.0},{"x":8.0,"y":8.0}]}]}
  */
 
-struct GameState: Codable {
+struct GameState: Codable, Equatable {
     var status: Bool
     var snakes: [Player]
     var fruit: [Point]

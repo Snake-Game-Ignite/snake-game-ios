@@ -13,7 +13,7 @@ import Foundation
     "score":0,
     "snake":[{"x":1.0,"y":5.0},{"x":1.0,"y":6.0},{"x":1.0,"y":7.0},{"x":1.0,"y":8.0}]}
  */
-struct Player: Codable {
+struct Player: Codable, Equatable {
     
     var id: Int
     var score: Int

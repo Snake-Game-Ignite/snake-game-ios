@@ -13,11 +13,14 @@ class GameViewModel {
     let cols: Int
     let colors: [UIColor] = [.systemOrange, .systemBlue]
     var prevState: GameState?
-    var state: GameState = .initial
+    var state: GameState?
     
     init(rows: Int, cols: Int) {
         self.rows = rows
         self.cols = cols
+        NetworkManager.shared.getState { [weak self] state in
+            self?.state = state
+        }
     }
     
     var cells: [CellWithPoint] {
@@ -25,14 +28,20 @@ class GameViewModel {
     }
     
     private var fruitCells: [CellWithPoint] {
+        guard let state else {
+            return []
+        }
         return state.fruit.map { point in
             return (cell: .fruit, point: point)
         }
     }
     
     private var snakeCells: [CellWithPoint] {
-        (0..<state.snakes.count).flatMap { snakeIndex in
-            let snake = state.snakes[snakeIndex]
+        guard let state else {
+            return []
+        }
+        return (0..<state.snakes.count).flatMap { snakeIndex in
+            let snake = state.snakes[snakeIndex].snake
             let color = colors[snakeIndex % colors.count]
             return (0..<snake.count).map { i in
                 let prevPosition = snake[at: i - 1]
@@ -46,58 +55,11 @@ class GameViewModel {
         }
     }
     
-    // TEMPORARY
     func move(direction: Direction) {
-        let otherSnakes = state.snakes.suffix(state.snakes.count - 1)
-        guard var mySnake = state.snakes.first,
-              let first = mySnake.first else {
-            return
-        }
-        var fruit = state.fruit
-        let next: Point
-        switch direction {
-        case .up:
-            next = Point(x: first.x, y: first.y - 1)
-        case .left:
-            next = Point(x: first.x - 1, y: first.y)
-        case .right:
-            next = Point(x: first.x + 1, y: first.y)
-        case .down:
-            next = Point(x: first.x, y: first.y + 1)
-        }
-        
-        let eatingFruit = fruit.contains(next)
-        
-        if eatingFruit {
-            mySnake = [next] + mySnake
-        } else {
-            mySnake = [next] + mySnake.prefix(mySnake.count - 1)
-        }
-        let snakes = [mySnake] + otherSnakes
-        
-        if eatingFruit {
-            fruit.removeAll { $0 == next}
-            fruit.append(randomFruit(snakes: snakes, fruit: fruit))
-        }
-
-        state = GameState(fruit: fruit,
-                           snakes: [mySnake] + otherSnakes)
-    }
-    
-    // TEMPORARY - Will crash/hang once game is full :)
-    func randomFruit(snakes: [[Point]], fruit: [Point]) -> Point {
-        while true {
-            let point = Point(x: Int.random(in: 0..<cols),
-                                  y: Int.random(in: 0..<rows))
-            if  fruit.contains(point) {
-                continue
+        NetworkManager.shared.makeMove(move: Move(playerId: 1, move: direction)) { [weak self] in
+            NetworkManager.shared.getState { [weak self] state in
+                self?.state = state
             }
-            for snake in snakes {
-                if snake.contains(point) {
-                    continue
-                }
-            }
-            return point
         }
     }
 }

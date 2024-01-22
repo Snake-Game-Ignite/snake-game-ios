@@ -70,7 +70,7 @@ class NetworkManager {
         }
     }
     
-    func makeMove(move: Move) {
+    func makeMove(move: Move, completion: @escaping (() -> Void)) {
         guard let url = URL(string: host + "move") else {
             return
         }
@@ -82,7 +82,7 @@ class NetworkManager {
         let jsonData = try! encoder.encode(move)
         
         postRequest(url: url, body: jsonData) { result in
-            print(result)
+            completion()
         }
     }
 }
