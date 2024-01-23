@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "HeadRight-Eyes.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
