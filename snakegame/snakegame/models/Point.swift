@@ -8,6 +8,6 @@
 import Foundation
 
 struct Point: Codable {
-    var x: Double
-    var y: Double
+    var x: Int
+    var y: Int
 }
