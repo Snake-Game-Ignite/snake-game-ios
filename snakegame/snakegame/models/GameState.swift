@@ -8,16 +8,40 @@
 import Foundation
 
 /*
-{
- "status":true,
- "fruit":[{"x":2.0,"y":5.0}],
- "snakes":[
-    {"id":1,"score":0,"snake":[{"x":1.0,"y":5.0},{"x":1.0,"y":6.0},{"x":1.0,"y":7.0},{"x":1.0,"y":8.0}]},
-    {"id":2,"score":0,"snake":[{"x":8.0,"y":5.0},{"x":8.0,"y":6.0},{"x":8.0,"y":7.0},{"x":8.0,"y":8.0}]}]}
+ {
+   "gameOver": false,
+   "message": "",
+   "snakes": {
+     "player1": [
+       {"x": 1, "y": 3},
+       {"x": 1, "y": 4},
+       {"x": 1, "y": 5}
+     ],
+     "player2": [
+       {"x": 4, "y": 0},
+       {"x": 4, "y": 1},
+       {"x": 4, "y": 2}
+     ]
+   },
+   "fruits": [
+     {"x": 3, "y": 2}
+   ],
+   "board": [
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0],
+     [0, 0, 2, 0, 0, 0],
+     [1, 1, 1, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0]
+   ],
+   "score": {},
+   "fruitEaten": false
+ }
  */
 
 struct GameState: Codable, Equatable {
-    var status: Bool
-    var snakes: [Player]
-    var fruit: [Point]
+    var gameOver: Bool
+    var message: String
+    var snakes: [String: [Point]]
+    var fruits: [Point]
 }

@@ -5,22 +5,29 @@
 //  Created by David Southgate on 22/01/2024.
 //
 
+import Combine
 import UIKit
 
+@Observable
 class GameViewModel {
     typealias CellWithPoint = (cell: Cell, point: Point)
     let rows: Int
     let cols: Int
-    let colors: [UIColor] = [.systemOrange, .systemBlue]
+    let colors: [UIColor] = [.systemOrange, .systemBlue, .systemGreen, .systemPink]
+    var playerColors: [String: UIColor] = [:]
     var prevState: GameState?
     var state: GameState?
+    var bag: Set<AnyCancellable> = Set()
+    var player = 1
     
     init(rows: Int, cols: Int) {
         self.rows = rows
         self.cols = cols
-        NetworkManager.shared.getState { [weak self] state in
-            self?.state = state
-        }
+        WebSocketManager.shared.state
+            .sink { [weak self] state in
+                self?.state = state
+            }
+            .store(in: &bag)
     }
     
     var cells: [CellWithPoint] {
@@ -31,7 +38,7 @@ class GameViewModel {
         guard let state else {
             return []
         }
-        return state.fruit.map { point in
+        return state.fruits.map { point in
             return (cell: .fruit, point: point)
         }
     }
@@ -40,9 +47,16 @@ class GameViewModel {
         guard let state else {
             return []
         }
-        return (0..<state.snakes.count).flatMap { snakeIndex in
-            let snake = state.snakes[snakeIndex].snake
-            let color = colors[snakeIndex % colors.count]
+        var snakeIndex = 0
+        return state.snakes.flatMap { playerId, snake in
+            let color: UIColor
+            if let playerColor = playerColors[playerId]  {
+                color = playerColor
+            } else {
+                color = colors[playerColors.count % colors.count]
+                playerColors[playerId] = color
+            }
+            snakeIndex += 1
             return (0..<snake.count).map { i in
                 let prevPosition = snake[at: i - 1]
                 let currentPosition = snake[i]
@@ -55,12 +69,21 @@ class GameViewModel {
         }
     }
     
+    var color: UIColor {
+        return playerColors[playerId] ?? .clear
+    }
+    
     func move(direction: Direction) {
-        NetworkManager.shared.makeMove(move: Move(playerId: 1, move: direction)) { [weak self] in
-            NetworkManager.shared.getState { [weak self] state in
-                self?.state = state
-            }
-        }
+        let move = Move(playerId: playerId, move: direction)
+        WebSocketManager.shared.makeMove(move)
+    }
+    
+    func reset() {
+        NetworkManager.shared.reset()
+    }
+    
+    var playerId: String {
+        return "player\(player)"
     }
 }
 

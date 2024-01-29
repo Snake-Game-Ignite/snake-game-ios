@@ -9,17 +9,41 @@ import SpriteKit
 import SwiftUI
 
 struct GameView: View {
-    var scene: GameScene = {
+    @State
+    var viewModel = GameViewModel(rows: GameScene.rows, cols: GameScene.cols)
+    
+    @State
+    var scene: GameScene
+    
+    @State private var favoriteColor = 0
+    
+    init() {
+        let viewModel = GameViewModel(rows: GameScene.rows, cols: GameScene.cols)
+        self.viewModel = viewModel
         let scene = SKScene(fileNamed: "GameScene") as! GameScene
         scene.scaleMode = .aspectFill
-        return scene
-    }()
+        scene.viewModel = viewModel
+        self.scene = scene
+    }
 
     var body: some View {
+        @Bindable var viewModel = viewModel
         ZStack {
             SpriteView(scene: scene)
                 .ignoresSafeArea()
             VStack {
+                Text(viewModel.state?.message ?? "")
+                    .foregroundStyle(.white)
+                Button("Reset") {
+                    viewModel.reset()
+                }
+                Picker("", selection: $viewModel.player) {
+                    Text("Player 1").tag(1)
+                    Text("Player 2").tag(2)
+                    Text("Player 3").tag(3)
+                }
+                .pickerStyle(.segmented)
+                .preferredColorScheme(.dark)
                 Spacer()
                 Group {
                     VStack(spacing: 10) {
@@ -40,6 +64,7 @@ struct GameView: View {
                     }
                 }
                 .font(.largeTitle)
+                .background(Color(viewModel.color))
             }
         }
     }

@@ -49,7 +49,7 @@ class NetworkManager {
     }
     
     func getState(completion: @escaping ((GameState?) -> Void)) {
-        guard let url = URL(string: host + "state") else {
+        guard let url = URL(string: host + "api/snake/state") else {
             completion(nil)
             return
         }
@@ -61,17 +61,18 @@ class NetworkManager {
                     let state = try JSONDecoder().decode(GameState.self, from: data)
                     completion(state)
                 } catch {
+                    print(error)
                     completion(nil)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
                 completion(nil)
             }
         }
     }
     
     func makeMove(move: Move, completion: @escaping (() -> Void)) {
-        guard let url = URL(string: host + "move") else {
+        guard let url = URL(string: host + "api/snake/move") else {
             return
         }
         let encoder = JSONEncoder()
@@ -85,5 +86,21 @@ class NetworkManager {
             completion()
         }
     }
+    
+    public func reset() {
+        guard let url = URL(string: host + "api/snake/reset") else {
+            return
+        }
+        let request = ResetRequest(boardSize: 50, keepScore: true, initialSnakeLength: nil)
+        let jsonData = try! JSONEncoder().encode(request)
+        postRequest(url: url, body: jsonData) { result in
+        }
+    }
+}
+
+struct ResetRequest: Codable {
+    let boardSize: Int?
+    let keepScore: Bool?
+    let initialSnakeLength: Int?
 }
                    
