@@ -9,12 +9,12 @@
 import Foundation
 
 enum Direction: Int, Comparable {
-    case up = 0
-    case right = 1
-    case down = 2
-    case left = 3
+    case up = 3
+    case right = 2
+    case down = 1
+    case left = 0
 
     static func < (lhs: Direction, rhs: Direction) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+        return lhs.rawValue > rhs.rawValue
     }
 }

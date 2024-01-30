@@ -14,11 +14,11 @@ import Foundation
  */
 struct Move: Codable {
     
-    var playerId: Int
-    var moveDirection: Int
+    var playerId: String
+    var direction: Int
     
-    init(playerId: Int, move: Direction) {
+    init(playerId: String, move: Direction) {
         self.playerId = playerId
-        moveDirection = move.rawValue
+        direction = move.rawValue
     }
 }

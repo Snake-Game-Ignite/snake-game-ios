@@ -18,7 +18,7 @@
 		03A8E2CF2B5F2616007A9340 /* CellBodyDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A8E2C82B5F2616007A9340 /* CellBodyDirection.swift */; };
 		03A8E2D02B5F2616007A9340 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A8E2C92B5F2616007A9340 /* Move.swift */; };
 		03A8E2D12B5F2616007A9340 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A8E2CA2B5F2616007A9340 /* Direction.swift */; };
-		03A8E2D22B5F2616007A9340 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A8E2CB2B5F2616007A9340 /* Player.swift */; };
+		03AC52812B6822D400314220 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AC52802B6822D400314220 /* WebSocketManager.swift */; };
 		64F998952B5D30D800D694CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F998942B5D30D800D694CF /* AppDelegate.swift */; };
 		64F998972B5D30D800D694CF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64F998962B5D30D800D694CF /* GameScene.sks */; };
 		64F998992B5D30D800D694CF /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64F998982B5D30D800D694CF /* Actions.sks */; };
@@ -60,7 +60,7 @@
 		03A8E2C82B5F2616007A9340 /* CellBodyDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellBodyDirection.swift; sourceTree = "<group>"; };
 		03A8E2C92B5F2616007A9340 /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		03A8E2CA2B5F2616007A9340 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
-		03A8E2CB2B5F2616007A9340 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		03AC52802B6822D400314220 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 		64F998912B5D30D800D694CF /* snakegame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = snakegame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F998942B5D30D800D694CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64F998962B5D30D800D694CF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -109,7 +109,6 @@
 				03A8E2CA2B5F2616007A9340 /* Direction.swift */,
 				03A8E2C52B5F2616007A9340 /* GameState.swift */,
 				03A8E2C92B5F2616007A9340 /* Move.swift */,
-				03A8E2CB2B5F2616007A9340 /* Player.swift */,
 				03A8E2C72B5F2616007A9340 /* Point.swift */,
 			);
 			path = models;
@@ -192,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				64F998C82B5D337A00D694CF /* NetworkManager.swift */,
+				03AC52802B6822D400314220 /* WebSocketManager.swift */,
 			);
 			path = networking;
 			sourceTree = "<group>";
@@ -333,10 +333,10 @@
 				64F998C92B5D337A00D694CF /* NetworkManager.swift in Sources */,
 				03A8E2CD2B5F2616007A9340 /* Cell.swift in Sources */,
 				64F9989B2B5D30D800D694CF /* GameScene.swift in Sources */,
+				03AC52812B6822D400314220 /* WebSocketManager.swift in Sources */,
 				035D47582B5EC1BB00BB2F33 /* Array+Utils.swift in Sources */,
 				035D475C2B5EC20700BB2F33 /* GridNode.swift in Sources */,
 				03A8E2CF2B5F2616007A9340 /* CellBodyDirection.swift in Sources */,
-				03A8E2D22B5F2616007A9340 /* Player.swift in Sources */,
 				03A8E2D02B5F2616007A9340 /* Move.swift in Sources */,
 				03A8E2CC2B5F2616007A9340 /* GameState.swift in Sources */,
 				03A8E2D12B5F2616007A9340 /* Direction.swift in Sources */,
@@ -511,13 +511,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8SREYL8WVJ;
+				DEVELOPMENT_TEAM = K6J498YT8Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,13 +539,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8SREYL8WVJ;
+				DEVELOPMENT_TEAM = K6J498YT8Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
