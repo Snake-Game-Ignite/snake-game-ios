@@ -8,11 +8,11 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    static let rows = 50
-    static let cols = 50
+    static let rows = 20
+    static let cols = 20
     
     var viewModel: GameViewModel!
-    let grid = GridNode(rows: GameScene.rows, cols: GameScene.cols, cellSize: 10)
+    let grid = GridNode(rows: GameScene.rows, cols: GameScene.cols, cellSize: 20)
     
     override func didMove(to: SKView) {
         addChild(grid)

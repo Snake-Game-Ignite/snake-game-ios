@@ -1,16 +1,24 @@
 //
-//  WebsocketManager.swift
-//  snakegame
+//  WebSocketManager.swift
+//  Snake
 //
-//  Created by David Southgate on 29/01/2024.
+//  Created by Vlad Z on 06/02/2024.
 //
 
 import Combine
 import Foundation
 
-class WebSocketManager {
+class WebSocketManager: ObservableObject {
     static let shared = WebSocketManager()
     var state = PassthroughSubject<GameState, Never>()
+    
+    @Published var gameState = GameState(
+        gameOver: false,
+        message: "",
+        snakes: [:],
+        fruits: [],
+        score: [:]
+    )
     
     private var webSocketTask: URLSessionWebSocketTask?
 
@@ -18,18 +26,7 @@ class WebSocketManager {
         self.connect()
     }
     
-    public func makeMove(_ move: Move) {
-        do {
-            let data = try JSONEncoder().encode(move)
-            let string = String(decoding: data, as: UTF8.self)
-            webSocketTask?.send(.string(string)) { _ in
-                print("Made move")
-            }
-        } catch {
-            print(error)
-        }
-    }
-    // "ws://localhost:8080/ws "ws://13.41.203.145:8080/ws"
+    // "ws://localhost:8080/ws"http://35.178.166.250:8080/
     private func connect() {
         guard let url = URL(string: "ws://13.41.203.145:8080/ws") else { return }
         var request = URLRequest(url: url)
@@ -39,11 +36,11 @@ class WebSocketManager {
     }
     
     private func receiveMessage() {
-        webSocketTask?.receive { [weak self] result in
+        webSocketTask?.receive() { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
-                fatalError()
+                 fatalError()
             case .success(let message):
                 switch message {
                 case .string(let text):
@@ -65,8 +62,13 @@ class WebSocketManager {
             let newState = try JSONDecoder().decode(GameState.self, from: data)
             state.send(newState)
             print(newState)
+            DispatchQueue.main.async {
+                self.gameState = newState
+            }
+            
         } catch {
             print(error)
         }
     }
 }
+
