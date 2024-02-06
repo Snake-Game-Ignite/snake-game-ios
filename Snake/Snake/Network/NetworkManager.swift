@@ -1,3 +1,10 @@
+//
+//  NetworkManager.swift
+//  Snake
+//
+//  Created by Vlad Z on 06/02/2024.
+//
+
 import Foundation
 
 class NetworkManager {
@@ -71,22 +78,6 @@ class NetworkManager {
         }
     }
     
-    func makeMove(move: Move, completion: @escaping (() -> Void)) {
-        guard let url = URL(string: host + "api/snake/move") else {
-            return
-        }
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        
-        
-        let jsonData = try! encoder.encode(move)
-        
-        postRequest(url: url, body: jsonData) { result in
-            completion()
-        }
-    }
-    
     public func reset() {
         guard let url = URL(string: host + "api/snake/restart") else {
             return
@@ -105,5 +96,19 @@ struct ResetRequest: Codable {
     let boardSize: Int?
     let keepScore: Bool?
     let initialSnakeLength: Int?
+}
+
+struct GameState: Codable, Equatable {
+    var gameOver: Bool
+    var message: String
+    var snakes: [String: [Point]]
+    var fruits: [Point]
+    var score: [String: Int]
+}
+
+struct Point: Codable, Equatable {
+    var x: Int
+    var y: Int
+
 }
                    

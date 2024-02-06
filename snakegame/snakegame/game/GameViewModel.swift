@@ -83,7 +83,14 @@ class GameViewModel {
     }
     
     var playerId: String {
-        return "player\(player)"
+        switch player {
+        case 1:
+            return "ios"
+        case 2:
+            return "android"
+        default:
+            return "player1"
+        }
     }
 }
 
