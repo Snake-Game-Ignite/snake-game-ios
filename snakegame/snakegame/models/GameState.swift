@@ -45,4 +45,5 @@ struct GameState: Codable, Equatable {
     var snakes: [String: [Point]]
     var fruits: [Point]
     var score: [String: Int]
+    var deaths: [String: Int]
 }

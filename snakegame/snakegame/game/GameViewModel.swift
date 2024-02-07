@@ -75,6 +75,7 @@ class GameViewModel {
     
     func move(direction: Direction) {
         let move = Move(playerId: playerId, move: direction)
+        WebSocketManager.shared.sendPing()
         WebSocketManager.shared.makeMove(move)
     }
     

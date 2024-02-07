@@ -37,6 +37,12 @@ struct GameView: View {
                 Button("Reset") {
                     viewModel.reset()
                 }
+                Text("Current Scores")
+                        .foregroundStyle(.white)
+                Text("iOS Fruits: \(viewModel.state?.score["ios"] ?? 0), Android Fruits: \(viewModel.state?.score["android"] ?? 0)")
+                        .foregroundStyle(.green)
+                Text("iOS Deaths: \(viewModel.state?.deaths["ios"] ?? 0), Android Deaths: \(viewModel.state?.deaths["android"] ?? 0)")
+                        .foregroundStyle(.red)
                 Picker("", selection: $viewModel.player) {
                     Text("Player 1").tag(1)
                     Text("Player 2").tag(2)
@@ -45,6 +51,7 @@ struct GameView: View {
                 .pickerStyle(.segmented)
                 .preferredColorScheme(.dark)
                 Spacer()
+                
                 Group {
                     VStack(spacing: 10) {
                         Button("⬆️") {

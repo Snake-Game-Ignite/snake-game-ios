@@ -43,7 +43,7 @@ class WebSocketManager {
             switch result {
             case .failure(let error):
                 print(error)
-                fatalError()
+                //fatalError()
             case .success(let message):
                 switch message {
                 case .string(let text):
@@ -67,6 +67,20 @@ class WebSocketManager {
             print(newState)
         } catch {
             print(error)
+        }
+    }
+    
+    func sendPing() {
+        webSocketTask?.sendPing { (error) in
+            if let error = error {
+                print("Sending PING failed: \(error)")
+            } else {
+                print("Ping sent after 10 seconds")
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                self.sendPing()
+            }
         }
     }
 }
